@@ -20,11 +20,6 @@ header {
     padding: 5px 5px 30px 5px;
 }
 
-.wrapper {
-    width: 800px;
-    margin: 50px auto;
-}
-
 .countUp {
     background-color: #c3b7c0;
     display: inline-block;
@@ -49,8 +44,4 @@ header {
     padding: 3%;
     margin-left: 3%;
     margin-right: 10%;
-}
-
-.h2 {
-
 }
