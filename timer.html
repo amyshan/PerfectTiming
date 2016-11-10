@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+     Perfect Timing coding challenge for ClickTime.
+     Created by Amy Shan
+    -->
+<head>
+    <meta charset="UTF-8">
+    <title>Perfect Timing</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="img/clicktime.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="wrapper">
+    <header>
+        Perfect Timing
+    </header>
+    <div id="body">
+        <!-- timer input -->
+        <section class="input">
+            <p id="description">Specify how many seconds to count up to/down from.</p>
+            <input type="number" id="countTarget" placeholder="Timer Amount"><br>
+        </section>
+        <!-- count up timer -->
+        <section class="countUp">
+            <h1 id="timerHeader">Count Up Timer</h1>
+            <h2 id="countUp"></h2>
+            <button id = "startUp" onclick="countUpTimer()" disabled><label>Start</label></button>
+            <button onclick="countUpResetTimer()"><label>Reset</label></button>
+        </section>
+        <!-- count down timer -->
+        <section class ="countDown">
+            <h1 id="timerHeader">Count Down Timer</h1>
+            <span class="countDownTimer"></span>
+            <h2 id="countDown"></h2>
+            <button id = "startDown" onclick="countDownTimer()" disabled><label>Start</label></button>
+            <button onclick="countDownResetTimer()"><label>Reset</label></button>
+        </section>
+    </div>
+</div>
+</body>
+
+<script>
+    // sets display for both timers
+    function setValue(time, timerID) {
+        var     days = Math.floor(time/86400),
+                hours = Math.floor((time%86400)/3600),
+                minutes = Math.floor(((time%86400)%3600)/60),
+                seconds = Math.floor(((time%86400)%3600)%60);
+
+        //takes care of edge cases with singular quantities
+        var     dayString = days == 1 ? " day " : " days ",
+                hourString = hours == 1 ? " hour " : " hours ",
+                minuteString = minutes == 1 ? " minute " : " minutes ",
+                secondString = seconds == 1 ? " second " : " seconds ";
+        document.getElementById(timerID).innerHTML =
+                days + dayString + hours + hourString + minutes + minuteString + seconds + secondString;
+    }
+
+    // global variable declarations
+    var downOn; // true when timer is activated
+    var upOn; // true when timer is activated
+    var currDown; // current value of down timer; set to user inputted time once "start" is clicked
+    var currUp; // current value of up timer; starts at 0
+    var countTarget; // user inputted time
+
+    setInterval(function () { // reset display value in timers every second
+        setIntervalHelper();
+    }, 1000);
+
+    setInterval(function () { // check if input value has changed every 50ms
+        ObserveInputValue();
+    }, 50);
+
+    function ObserveInputValue() {
+        var buttonDown = document.getElementById("startDown");
+        var buttonUp = document.getElementById("startUp");
+        if (document.getElementById("countTarget").value == "") {
+            countTarget = 0;
+            countDownResetTimer();
+            countUpResetTimer();
+            buttonDown.disabled = true;
+            buttonUp.disabled = true;
+        }
+        if (document.getElementById("countTarget").value != countTarget) {
+            countDownResetTimer();
+            countUpResetTimer();
+            buttonDown.disabled = false;
+            buttonUp.disabled = false;
+            document.getElementById("startDown").innerHTML = "Start";
+            document.getElementById("startUp").innerHTML = "Start";
+        }
+    }
+
+    function setIntervalHelper() {
+        // execute new setValue only if timer is on
+        if (downOn) {
+            if (currDown <= 0) {
+                downOn = false;
+                setValue(currDown, "countDown");
+                document.getElementById("startDown").disabled = true;
+            } else {
+                setValue(currDown--, "countDown");
+            }
+        }
+        if (upOn) {
+            if (currUp > countTarget) {
+                upOn = false;
+                document.getElementById("startUp").disabled = true;
+            } else {
+                setValue(currUp++, "countUp");
+            }
+        }
+    }
+
+    function countDownTimer() {
+        // true when user clicks button to start timer
+        if (!downOn) {
+            setValue(currDown, "countDown");
+            document.getElementById("startDown").innerHTML = "Pause";
+        // false when user clicks button to pause timer
+        } else {
+            document.getElementById("startDown").innerHTML = "Start";
+        }
+        downOn = !downOn;
+    }
+
+    function countUpTimer() {
+        if (!upOn) {
+            setValue(currUp, "countUp");
+            document.getElementById("startUp").innerHTML = "Pause";
+        } else {
+            document.getElementById("startUp").innerHTML = "Start";
+        }
+        upOn = !upOn;
+    }
+
+    function countDownResetTimer() {
+        downOn = false;
+        countTarget = document.getElementById("countTarget").value;
+        currDown = countTarget;
+        setValue(countTarget, "countDown");
+        document.getElementById("startDown").innerHTML = "Start";
+        document.getElementById("startDown").disabled = false;
+    }
+
+    function countUpResetTimer() {
+        upOn = false;
+        currUp = 0;
+        setValue(0, "countUp");
+        document.getElementById("startUp").innerHTML = "Start";
+        document.getElementById("startUp").disabled = false;
+    }
+
+    // Initialize counters by resetting them
+    countDownResetTimer();
+    countUpResetTimer();
+
+</script>
+
+</html>

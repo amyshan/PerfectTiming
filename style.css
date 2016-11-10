@@ -1,0 +1,56 @@
+/**
+    Contains styling for Perfect Timing coding challenge.
+    Created by Amy Shan
+*/
+@charset "utf-8";
+
+header {
+    color: #6b4d6d;
+    font-family: "DIN Alternate";
+    letter-spacing: 2px;
+    font-size: 66px;
+    text-align: center;
+    font-weight: bold;
+    padding: 50px 5px 5px 5px;
+}
+
+.input {
+    text-align: center;
+    font-family: Avenir;
+    padding: 5px 5px 30px 5px;
+}
+
+.wrapper {
+    width: 800px;
+    margin: 50px auto;
+}
+
+.countUp {
+    background-color: #c3b7c0;
+    display: inline-block;
+    width: 30%;
+    height: 35%;
+    float:left;
+    text-align: center;
+    font-family: "DIN Alternate";
+    padding: 3%;
+    margin-left: 10%;
+    margin-right: 3%;
+}
+
+.countDown {
+    background-color: #c3b7c0;
+    display: inline-block;
+    width: 30%;
+    height: 35%;
+    float:right;
+    text-align: center;
+    font-family: "DIN Alternate";
+    padding: 3%;
+    margin-left: 3%;
+    margin-right: 10%;
+}
+
+.h2 {
+
+}
