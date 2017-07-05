@@ -1,2 +1,2 @@
 # perfecttiming
-ClickTime Perfect Timing Coding Challenge
+Javascript timing app that counts up and down from specified input (in seconds).
